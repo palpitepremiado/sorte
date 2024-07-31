@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Palpite premiado </title>
+    <title>Palpite premiado</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -61,16 +61,12 @@
             padding: 10px 0;
             text-align: center;
             font-size: 24px;
-
-
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
-            
-          
         }
 
-         .nav {
+        .nav {
             display: flex;
             justify-content: center;
             background-color: #004d40;
@@ -78,31 +74,30 @@
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
-            
         }
+        
         .nav a {
-            color:white;
+            color: white;
             text-decoration: none;
             margin: 0 15px;
             font-size: 16px;
-            
         }
 
-        .nav a:hover{
-            background-color: #f0f0f0;
-            border-radius: 2px;
+        .nav a:hover {
             
+            border-radius: 2px;
         }
+        
         .date-selector div {
             background-color: #004d40;
             cursor: pointer;
-             max-width: 600px;
+            max-width: 600px;
             margin: 0 auto;
             padding: 20px;
             border-radius: 10px;
-
         }
-        .date-selector div:hover{
+
+        .date-selector div:hover {
             background-color: #f0f0f0;
         }
 
@@ -112,25 +107,17 @@
             margin-bottom: 20px;
             max-width: 600px;
             margin: 0 auto;
-            padding: 10px;
-            border-radius: 10px;
+            padding: 20px;
+            background: #fff;         
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         .date-selector div.active {
             background-color: #0056b3;
             color: white;
         }
-        
-
-     
     </style>
 </head>
-
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3415447083987639"
-     crossorigin="anonymous"></script>
-
-
-    
 <body>
     <div class="header">Apostas Esportivas</div>
     <div class="nav">
@@ -143,14 +130,13 @@
 
     <div class="date-selector">
         <div>SÁB 27</div>
-        <div  class="active">DOM 28</div>
+        <div class="active">DOM 28</div>
         <div>SEG 29</div>
         <div>TER 30</div>
         <div>QUA 31</div>
         <div>QUI 1</div>
     </div>
 
-    
     <div id="games-container">
         <!-- Os jogos e seus botões correspondentes serão adicionados aqui -->
     </div>
@@ -201,10 +187,34 @@
             if (index < games.length - 1) {
                 const adSpace = document.createElement('div');
                 adSpace.className = 'ad-space';
-                adSpace.innerText = 'Espaço para anúncio';
+
+                // Cria e adiciona o script do anúncio
+                const adScript = document.createElement('script');
+                adScript.async = true;
+                adScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3415447083987639";
+                adScript.crossOrigin = "anonymous";
+
+                // Cria e adiciona o ins do anúncio
+                const adIns = document.createElement('ins');
+                adIns.className = "adsbygoogle";
+                adIns.style.display = "block";
+                adIns.setAttribute('data-ad-client', 'ca-pub-3415447083987639');
+                adIns.setAttribute('data-ad-slot', '4893836353');
+                adIns.setAttribute('data-ad-format', 'auto');
+                adIns.setAttribute('data-full-width-responsive', 'true');
+
+                adSpace.appendChild(adScript);
+                adSpace.appendChild(adIns);
+
+                // Inicializa o anúncio
+                const initAd = document.createElement('script');
+                initAd.innerHTML = '(adsbygoogle = window.adsbygoogle || []).push({});';
+                adSpace.appendChild(initAd);
+
                 container.appendChild(adSpace);
             }
         });
     </script>
 </body>
 </html>
+
