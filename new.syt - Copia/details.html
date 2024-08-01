@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palpite premiado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+
+        #details-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .hidden {
+            display: none;
+            
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff5c5c;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 45px;
+            cursor: pointer;
+            font-size: 18px;
+            line-height: 30px;
+            text-align: center;
+        }
+
+        .close-btn:hover {
+            background: #ff1c1c;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="tel"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .ad-space {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        input{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="details-container">
+        <!-- Formulário com máscara de entrada -->
+        <form id="myForm" action="https://api.sheetmonkey.io/form/2Drqp3GC9HnVvxpsDQcaS8" method="post">
+            <div id="myDiv1" class="hidden">
+                <button type="button" class="close-btn" onclick="closeDiv('myDiv1')">×</button>
+                <h1 class="replica"></h1>
+                <p>Vencedor do Encontro: <br>
+                    <input id="resultado" name="resultado" type="text"  value="CASA" readonly>
+                </p>
+                <p>Jogo <br>
+                    <input type="text" readonly value="Palmeiras x America MG" name="Codigo">
+                </p>
+                <p>Nome: <br>
+                    <input type="text" id="txt" name="Nome" required>
+                </p>
+                <p>Celular: <br>
+                    <input type="tel" id="telefone" name="telefone" placeholder="(11) 12345-6789" required>
+                </p>
+                <button type="submit">Enviar</button>
+            </div>
+        </form>
+        <div class="ad-space">Espaço para anúncio</div>
+    </div>
+
+    <script>
+        // Máscara de entrada para celular
+        document.getElementById('telefone').addEventListener('input', function(event) {
+            let value = event.target.value;
+            
+            // Remove todos os caracteres não numéricos
+            value = value.replace(/\D/g, '');
+            
+            // Aplica a máscara
+            if (value.length > 2) {
+                value = `(${value.substring(0, 2)}) ${value.substring(2, 7)}-${value.substring(7, 11)}`;
+            } else if (value.length > 0) {
+                value = `(${value.substring(0, 2)}) ${value.substring(2)}`;
+            }
+
+            event.target.value = value;
+        });
+
+        // Simular dados do jogo e exibir a div oculta
+        const games = [
+            { id: 1, teams: "CDS Tampico Madero vs Morelia", odds: [2.45, 3.40, 2.75] },
+            { id: 2, teams: "Tuggeranong United vs Cooma Tigers", odds: [3.20, 4.50, 1.75] },
+            { id: 3, teams: "Canberra FC vs Gungahlin", odds: [2.15, 3.90, 2.60] },
+            { id: 4, teams: "Viktoria Žižkov vs Líšeň", odds: [1.83, 3.30, 4.10] }
+        ];
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const gameId = parseInt(urlParams.get('id'));
+        const option = urlParams.get('option');
+
+        const container = document.getElementById('details-container');
+        const game = games.find(g => g.id === gameId);
+
+        if (game) {
+            const optionsMap = {
+                casa: { text: "Casa", odd: game.odds[0] },
+                empate: { text: "Empate", odd: game.odds[1] },
+                fora: { text: "Fora", odd: game.odds[2] }
+            };
+
+            const selectedOption = optionsMap[option];
+
+            document.querySelector('.replica').innerText = `${game.teams}`;
+            document.querySelector('#resultado').value = selectedOption.text;
+            document.querySelector('[name="Codigo"]').value = game.teams;
+
+            // Mostrar a div oculta
+            document.getElementById('myDiv1').classList.remove('hidden');
+        } else {
+            container.innerHTML = `<p>Jogo não encontrado.</p>`;
+        }
+
+        function closeDiv(divId) {
+            document.getElementById(divId).classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
